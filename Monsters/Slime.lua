@@ -10,6 +10,8 @@
 
 --Add another attack (Slime ball?)
 
+
+-- Initializing all variables
 local debris = game:GetService("Debris")
 local TS = game:GetService("TweenService")
 local runService = game:GetService("RunService")
@@ -46,7 +48,7 @@ local aggroDist = 20
 local aggroTarget = nil
 
 
-
+-- If the slime is moving, the animation will play
 local function onWalking(speed)
 	if speed > 0 then
 		if not walkAnimTrack.IsPlaying then
@@ -59,6 +61,7 @@ local function onWalking(speed)
 	end
 end
 
+-- [Function for the particle effect emmision]
 local function emitEffect()
 	if emitDebounce == true then return end
 	local rayOrigin = slime:FindFirstChild("SlimeCore").Position
@@ -86,10 +89,9 @@ local function emitEffect()
 	end)
 
 end
-
+-- {This is the function for the slam attack}
 local function attack1()
 	if attackDebounce == true then return end
-	--attackDebounce = true
 	attacking = true
 	local possibleTargets = {}
 	damage = 15
@@ -97,7 +99,6 @@ local function attack1()
 	attack1AnimTrack:Play()
 	local function dmg(firstTick)
 		if dmgDebounce == true then return end
-		--if attackDebounce == true then return end
 		local counter = 0
 		for i, v in pairs(possibleTargets) do
 			if dmgDebounce == true then return end
@@ -105,7 +106,7 @@ local function attack1()
 				if dmgDebounce == true then return end
 				local bool = v.Parent:FindFirstChild("BlockingBool").Value
 				--{Parry effect}
-				if bool == true then
+				if bool == true then -- {Checks if player is blocking}
 					local clashSound = script.ClashSound:Clone()
 					clashSound.Parent = v
 					clashSound:Play()
